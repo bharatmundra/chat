@@ -10,7 +10,7 @@ app.secret_key='replcee_later'
 
 def index():
     
-    reg_form=RegistrationForm();
+    reg_form=RegistrationForm()
     if reg_form.validate_on_submit():
         return "great sucess"
     return render_template("index.html",form=reg_form)
