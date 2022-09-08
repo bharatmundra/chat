@@ -1,5 +1,6 @@
 from flask import Flask,render_template
 
+from wtform_field import *
 
 app =Flask(__name__)
 
@@ -8,7 +9,11 @@ app.secret_key='replcee_later'
 @app.route("/",methods=['GET', 'POST'])
 
 def index():
-    return render_template("index.html")
+    
+    reg_form=RegistrationForm();
+    if reg_form.validate_on_submit():
+        return "great sucess"
+    return render_template("index.html",form=reg_form)
 
 
 
