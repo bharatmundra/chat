@@ -1,28 +1,21 @@
 from flask import Flask,render_template
 
 from wtform_field import *
-from models.py import *
-app =Flask(__name__)
+from models import *
+app=Flask(__name__)
 
 app.secret_key='replcee_later'
 
-app.config['SQLACHEMY_DATABASE_URI']='    postgres://pljzpkgljwqeiu:2e810b076f432df14cd089fb7207e7cdfa6f96c528c892b9ad96d0df24c4f1ec@ec2-44-193-178-122.compute-1.amazonaws.com:5432/d8im41dkh59lke'
-db= SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI']='postgres://pljzpkgljwqeiu:2e810b076f432df14cd089fb7207e7cdfa6f96c528c892b9ad96d0df24c4f1ec@ec2-44-193-178-122.compute-1.amazonaws.com:5432/d8im41dkh59lke'
+db=SQLAlchemy(app)
 
 @app.route("/",methods=['GET', 'POST'])
 def index():
     
     reg_form=RegistrationForm()
     if reg_form.validate_on_submit():
-        username=reg_form.username.data
-        password=reg_form.password.data
         
-        user_object = User.query.filter_by(username=username).first()
-             # if user_object not null
-        if user_object:
-            return "someone else has taken this username!"
-
-        user=User(username=username, password=password)  
+        user = User(username=reg_form.username.data, password=reg_form.password.data)  
         db.session.add(user)
         db.session.commit()
         return "inserted into DB!"

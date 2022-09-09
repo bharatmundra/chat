@@ -26,3 +26,12 @@ class RegistrationForm(FlaskForm):
         EqualTo('password',message="password must match")
         ])
     submit_button= SubmitField('Create')
+
+
+    def validate(self, username):
+        user_object =User.query.filter_by(username=username.data).first()
+        if user_object:
+            raise ValueError("username already exist. select a differnt username.")
+
+
+
