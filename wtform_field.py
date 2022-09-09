@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,SubmitField
 from wtforms.validators import InputRequired,Length,EqualTo
 
-
+from models import User
 
 class RegistrationForm(FlaskForm):
     """Registration Form"""
@@ -12,7 +12,7 @@ class RegistrationForm(FlaskForm):
 
     username = StringField(
         'username_label',
-        validators=[InputRequired("Username Required"),
+         validators=[InputRequired("Username Required"),
         Length(min=4,max=25,message="Username must be between 4 and 25 characters")
         ]
         )
@@ -28,10 +28,9 @@ class RegistrationForm(FlaskForm):
     submit_button= SubmitField('Create')
 
 
-    def validate(self, username):
-        user_object =User.query.filter_by(username=username.data).first()
-        if user_object:
-            raise ValueError("username already exist. select a differnt username.")
-
+    # def validate_username(self, username):
+    #     user_object = User.query.filter_by(username=username.data).first()
+    #     if user_object:
+    #         raise ValidationError("Username already exists. Select a different username.")
 
 
